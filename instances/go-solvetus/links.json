@@ -1,0 +1,10 @@
+{
+  "base": "https://sink-go-solvetus.solvetus.workers.dev",
+  "utm_source": "solvetuscom",
+  "links": [
+    { "slug": "nordpass", "url": "https://nordpass.com/plans/business/?utm_source=solvetuscom&utm_medium=referral&utm_campaign=password-managers" },
+    { "slug": "1password", "url": "https://1password.com/pricing/business?utm_source=solvetuscom&utm_medium=referral&utm_campaign=password-managers" },
+    { "slug": "bitwarden", "url": "https://bitwarden.com/pricing/business/?utm_source=solvetuscom&utm_medium=referral&utm_campaign=password-managers" },
+    { "slug": "proton-pass", "url": "https://proton.me/business/pass/pricing?utm_source=solvetuscom&utm_medium=referral&utm_campaign=password-managers" }
+  ]
+}

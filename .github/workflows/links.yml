@@ -1,0 +1,41 @@
+name: Links
+
+# Converges each instance's Sink to instances/<instance>/links.json after every
+# successful Deploy (idempotent: create, edit if the URL changed, else unchanged),
+# then verifies every link answers 302 with the exact Location and no cookie.
+# SINK_SITE_TOKEN is an Environment secret; the script never prints it.
+
+on:
+  workflow_run:
+    workflows: [Deploy]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: links
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        instance: [go-solvetus]
+    environment: ${{ matrix.instance }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - name: Sync and verify links
+        env:
+          SINK_SITE_TOKEN: ${{ secrets.SINK_SITE_TOKEN }}
+        run: node scripts-solvetus/sync-links.mjs ${{ matrix.instance }}

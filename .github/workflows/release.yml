@@ -1,0 +1,38 @@
+name: Release
+
+# On a `v*` tag push, create the GitHub Release. The BODY is the annotated tag
+# message, written from the commit log at tagging time (fleet release rule: never
+# generated notes). Uses the first-party gh CLI instead of a third-party release
+# action, because this job holds `contents: write` and the repo is public.
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      # actions/checkout fetches the tag PEELED (a lightweight ref at the commit),
+      # so %(contents) would return the commit message. Re-fetch the real
+      # annotated tag object first.
+      - name: Create or update the Release from the tag message
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git fetch --force origin "refs/tags/${GITHUB_REF_NAME}:refs/tags/${GITHUB_REF_NAME}"
+          test "$(git cat-file -t "${GITHUB_REF_NAME}")" = "tag" || { echo "not an annotated tag"; exit 1; }
+          git tag -l --format='%(contents)' "${GITHUB_REF_NAME}" > "${RUNNER_TEMP}/notes.md"
+          test -s "${RUNNER_TEMP}/notes.md" || { echo "empty tag message"; exit 1; }
+          if gh release view "${GITHUB_REF_NAME}" > /dev/null 2>&1; then
+            gh release edit "${GITHUB_REF_NAME}" --title "${GITHUB_REF_NAME}" --notes-file "${RUNNER_TEMP}/notes.md"
+          else
+            gh release create "${GITHUB_REF_NAME}" --title "${GITHUB_REF_NAME}" --notes-file "${RUNNER_TEMP}/notes.md" --verify-tag
+          fi

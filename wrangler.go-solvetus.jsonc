@@ -1,0 +1,70 @@
+{
+  // Solvetus instance of Sink: go.solvetus.com, main Solvetus Cloudflare account.
+  // Ours alone: upstream's wrangler.jsonc is never edited, so "Sync fork" cannot
+  // conflict. After a sync, diff upstream's wrangler.jsonc against this file for
+  // new bindings (see SOLVETUS.md). Deployed ONLY by .github/workflows/deploy.yml.
+  // Naming: sink-<subdomain>-<domain>-<resource> (Infrastructure Naming Standards).
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sink-go-solvetus",
+  "main": ".output/server/index.mjs",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".output/public",
+    "html_handling": "drop-trailing-slash"
+  },
+  "compatibility_date": "2026-11-23",
+  "compatibility_flags": ["nodejs_compat"],
+  // Turned off once go.solvetus.com is live (cut-over step 6).
+  "workers_dev": true,
+  "preview_urls": false,
+  // vars in this file are the single source of truth: a deploy replaces whatever
+  // is set in the dashboard. Secrets (NUXT_SITE_TOKEN, NUXT_CF_API_TOKEN) are set
+  // by hand in the Worker's Variables and Secrets and survive deploys.
+  "keep_vars": false,
+  "vars": {
+    // Hard requirement: temporary redirects. Destinations change when affiliate
+    // programmes approve, and a 301 would be cached by browsers for good.
+    "NUXT_REDIRECT_STATUS_CODE": "302",
+    "NUXT_REDIRECT_NO_STORE": "true",
+    // The visitor's query string is never appended: the UTMs in the stored URL are final.
+    "NUXT_REDIRECT_WITH_QUERY": "false",
+    "NUXT_LINK_CACHE_TTL": "60",
+    "NUXT_CASE_SENSITIVE": "false",
+    // Root and unknown slugs go to the main site (the unknown-slug redirect is always 302).
+    "NUXT_PUBLIC_HOME_URL": "https://solvetus.com/",
+    "NUXT_NOT_FOUND_REDIRECT": "https://solvetus.com/",
+    // Features we do not use. Per-link password, warning page, cloaking and OpenGraph
+    // fields are rejected by scripts-solvetus/sync-links.mjs; there is no AI or R2 binding.
+    "NUXT_PUBLIC_LINK_PROXY_ENABLED": "false",
+    "NUXT_DISABLE_AUTO_BACKUP": "true",
+    // Click analytics are ON, exactly as upstream ships them (decision 2026-11-23):
+    // the dataset below is the ANALYTICS binding's dataset; the account id lets the
+    // dashboard read it with the NUXT_CF_API_TOKEN secret (Account Analytics: Read).
+    "NUXT_DATASET": "sink_go_solvetus_clicks",
+    "NUXT_CF_ACCOUNT_ID": "668113a7c146c356b40a76cbe3343bfe"
+  },
+  "analytics_engine_datasets": [
+    { "binding": "ANALYTICS", "dataset": "sink_go_solvetus_clicks" }
+  ],
+  "kv_namespaces": [
+    { "binding": "KV", "id": "REPLACE_WITH_KV_NAMESPACE_ID" }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "sink-go-solvetus-links",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  // Upstream's daily cron (backup + expired-link cleanup). Both are off here, so it no-ops.
+  "triggers": { "crons": ["0 0 * * *"] },
+  // Console logs only. Invocation logs are OFF: each records the full request,
+  // including headers and the cf geo object, of every click, on top of what the
+  // analytics dataset already holds (which the privacy policy discloses).
+  "observability": {
+    "enabled": true,
+    "logs": { "enabled": true, "invocation_logs": false },
+    "traces": { "enabled": false }
+  }
+}

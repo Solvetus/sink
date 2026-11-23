@@ -1,0 +1,52 @@
+name: Deploy
+
+# GitHub Actions is the ONLY deployer. Workers Builds / Git integration must stay
+# off for every Worker this repo deploys. One job per instance; each instance has a
+# GitHub Environment of the same name holding CLOUDFLARE_API_TOKEN (secret) and
+# CLOUDFLARE_ACCOUNT_ID (variable), so the names stay standard across Cloudflare accounts.
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  # PINNED, flagged: upstream pins wrangler 4.110.0 in package.json; we run the current
+  # release through npx instead (package.json is upstream's file, never edited here).
+  # Bump this when a newer wrangler is out.
+  WRANGLER_VERSION: 4.167.0
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        instance: [go-solvetus]
+    environment: ${{ matrix.instance }}
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v7
+      # corepack reads upstream's `packageManager` (pnpm 11.11.0, pinned by upstream,
+      # flagged: pnpm 12 is out but the lockfile is upstream's).
+      - run: corepack enable
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Apply D1 migrations
+        run: npx --yes wrangler@${WRANGLER_VERSION} d1 migrations apply DB --remote --config wrangler.${{ matrix.instance }}.jsonc
+      - name: Deploy
+        run: npx --yes wrangler@${WRANGLER_VERSION} deploy --config wrangler.${{ matrix.instance }}.jsonc
