@@ -47,6 +47,9 @@
     // Click analytics are ON, exactly as upstream ships them (decision 2026-11-23):
     // the dataset below is the ANALYTICS binding's dataset; the account id lets the
     // dashboard read it with the NUXT_CF_API_TOKEN secret (Account Analytics: Read).
+    // Clicks Sink recognises as robots (verified bots, crawler/fetcher user agents, names with bot/spider) are
+    // not written to analytics: cleaner real-visitor numbers and less data stored (decision 2026-11-24).
+    "NUXT_DISABLE_BOT_ACCESS_LOG": "true",
     "NUXT_DATASET": "sink_go_solvetus_clicks",
     "NUXT_CF_ACCOUNT_ID": "668113a7c146c356b40a76cbe3343bfe",
     // Cloudflare Access protects /dashboard and /_docs only (never a short link). With both values
