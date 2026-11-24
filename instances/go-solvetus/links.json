@@ -1,5 +1,5 @@
 {
-  "base": "https://go.solvetus.com",
+  "base": "https://sink-go-solvetus.solvetus.workers.dev",
   "utm_source": "solvetuscom",
   "links": [
     { "slug": "nordpass", "url": "https://nordpass.com/plans/business/?utm_source=solvetuscom&utm_medium=referral&utm_campaign=password-managers" },
