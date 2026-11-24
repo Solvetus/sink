@@ -4,6 +4,8 @@ Fork of [miantiao-me/Sink](https://github.com/miantiao-me/Sink) (AGPL-3.0), kept
 **Configuration only: no upstream file is edited**, so syncing never conflicts. The AGPL source of what we
 run is this repository.
 
+**One exception (2026-11-24):** upstream's `.github/workflows/issue-assistant.yml` is **deleted here**. It ran `oven-sh/setup-bun` and `curl | bash` with an API key in a public repo, and our rule is no third-party action in any workflow (the organisation allows only GitHub's own actions). Issues are off and it was already disabled. If a sync reports a conflict on that file, delete it again.
+
 ## What is ours
 | File | Purpose |
 |---|---|

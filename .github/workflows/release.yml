@@ -2,8 +2,10 @@ name: Release
 
 # On a `v*` tag push, create the GitHub Release. The BODY is the annotated tag
 # message, written from the commit log at tagging time (fleet release rule: never
-# generated notes). Uses the first-party gh CLI instead of a third-party release
-# action, because this job holds `contents: write` and the repo is public.
+# generated notes). Uses the first-party gh CLI, never a third-party release
+# action: this job holds `contents: write`, so a third-party action here would be
+# a supply-chain path into the repo. One file, byte-identical across the fleet
+# (the audit script compares its SHA-256); do not edit it per repo.
 
 on:
   push:
