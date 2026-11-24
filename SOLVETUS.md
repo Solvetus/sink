@@ -12,6 +12,7 @@ run is this repository.
 | `scripts-solvetus/sync-links.mjs` | Creates or edits links through Sink's API, then checks each answers 302 |
 | `.github/workflows/deploy.yml` | The only deployer (Workers Builds stays off) |
 | `.github/workflows/links.yml` | Runs the sync after every successful deploy |
+| `.github/workflows/kv-check.yml` + `scripts-solvetus/check-kv.mjs` | Manual: proves the Worker reads and writes the EU-jurisdiction KV through its binding |
 | `.github/workflows/release.yml` | GitHub Release from the annotated tag message |
 
 ## Add a link

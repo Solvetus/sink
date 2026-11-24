@@ -1,0 +1,37 @@
+name: KV check
+
+# Manual. Proves, once per instance and again whenever wanted, that the Worker reads and writes its
+# KV namespace through the binding. Run after the first Deploy + Links run, before anything public
+# depends on the instance. Uses the deploy token (Workers KV Storage Edit); no D1 token here.
+
+on:
+  workflow_dispatch:
+    inputs:
+      instance:
+        description: Instance to check
+        default: go-solvetus
+        required: true
+
+permissions:
+  contents: read
+
+env:
+  WRANGLER_VERSION: 4.167.0 # keep equal to deploy.yml
+
+jobs:
+  kv:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: ${{ inputs.instance }}
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - name: Check the KV binding
+        env:
+          INSTANCE: ${{ inputs.instance }}
+        run: node scripts-solvetus/check-kv.mjs "$INSTANCE"
