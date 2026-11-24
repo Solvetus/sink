@@ -56,7 +56,7 @@
     {
       "binding": "DB",
       "database_name": "sink-go-solvetus-links",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "database_id": "80590235-b19f-4a00-99e8-c9f689f8715f",
       "migrations_dir": "drizzle"
     }
   ],
