@@ -50,7 +50,11 @@
     // Clicks Sink recognises as robots (verified bots, crawler/fetcher user agents, names with bot/spider) are
     // not written to analytics: cleaner real-visitor numbers and less data stored (decision 2026-11-24).
     "NUXT_DISABLE_BOT_ACCESS_LOG": "true",
-    "NUXT_DATASET": "sink_go_solvetus_clicks",
+    // Dataset reset 2026-11-24: the first dataset (sink_go_solvetus_clicks) holds only our own test clicks; it is
+    // retired, no longer read, and expires by itself after three months. The new dataset is sink_go_solvetus_visits
+    // (named for what it holds, no version suffix). NUXT_DATASET and the ANALYTICS binding below must always name
+    // the same dataset.
+    "NUXT_DATASET": "sink_go_solvetus_visits",
     "NUXT_CF_ACCOUNT_ID": "668113a7c146c356b40a76cbe3343bfe",
     // Cloudflare Access protects /dashboard and /_docs only (never a short link). With both values
     // set, /api also accepts the Access login; the site token keeps working. AUD is added when the
@@ -60,7 +64,7 @@
     "NUXT_CF_ACCESS_AUD": "c2094b1530465a64dfdbd1c436095f7000b775be0f8f638735dfe47da8d32c1a"
   },
   "analytics_engine_datasets": [
-    { "binding": "ANALYTICS", "dataset": "sink_go_solvetus_clicks" }
+    { "binding": "ANALYTICS", "dataset": "sink_go_solvetus_visits" }
   ],
   "kv_namespaces": [
     { "binding": "KV", "id": "add6aa9708974b62a6541fdc9bc91dea" }
