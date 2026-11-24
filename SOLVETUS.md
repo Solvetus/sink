@@ -19,6 +19,16 @@ run is this repository.
 Add one line to `instances/<instance>/links.json` (slug lowercase-hyphen, vendor first; URL with
 `utm_source`, `utm_medium=referral`, `utm_campaign`), push to `master`. Deploy, then the link sync, run by themselves.
 
+## Automation never clicks a vendor link
+Sink records every request to a short link as a visitor (IP, user agent, location, ...). Its bot detection only recognises real
+crawlers (Googlebot and the like), **not** curl, Node, browsers or a custom user agent (tested 2026-11-24), so a check cannot hide behind a user
+agent, and we never impersonate a crawler. Therefore:
+- `sync-links.mjs` verifies stored links **through the API** (no click) and tests the real redirect on **one canary link only**:
+  `canary` in `links.json` (`link-check` → `https://solvetus.com/…`), whose clicks are test traffic to ignore in the stats.
+- Vendor links are probed only by hand, when asked; those clicks are test data too (Analytics Engine keeps them for three months).
+- `kv-check.yml` is manual and its probe is one click under the slug `kv-probe`.
+- The site's own gate (`scripts/go-links-check.mjs` in solvetus-COM-www) reads this repo's public `links.json` instead of calling the domain.
+
 ## Sync with upstream
 `gh repo sync Solvetus/sink --source miantiao-me/Sink` (or the Sync fork button), read the release notes, diff upstream's
 `wrangler.jsonc` against ours for new bindings or config, let CI deploy, check the run is green. Tags: `v<upstream>-solvetus.<N>`.

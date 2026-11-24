@@ -6,6 +6,8 @@
 // WRITE: after a links sync, KV holds a `link:<slug>` key per link, put there by the Worker's write-through.
 // READ:  a throwaway KV-only key (no D1 row) is put straight into the namespace; the Worker must redirect
 //        on it, which it can only do by reading KV. The key has a 120 s TTL and is deleted at the end.
+// Manual only. The probe request is recorded by Sink as one click under the slug `kv-probe` (Sink's bot detection
+// does not recognise our tools), so this is test data, filterable by slug. It never touches a vendor link.
 // Prints key names and statuses only, never values or tokens.
 import { execFileSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
@@ -38,7 +40,7 @@ try {
   wrangler('kv', 'key', 'put', probeKey, JSON.stringify({ url: probeUrl }), '--namespace-id', id, '--remote', '--ttl', '120')
   let seen
   for (let i = 0; i < 12; i++) {
-    const res = await fetch(`${base}/kv-probe`, { redirect: 'manual' })
+    const res = await fetch(`${base}/kv-probe`, { redirect: 'manual', headers: { 'user-agent': 'solvetus-link-check/1.0 (+https://solvetus.com)' } })
     seen = { status: res.status, location: res.headers.get('location'), cookie: !!res.headers.get('set-cookie') }
     if (seen.location === probeUrl) break
     await new Promise(r => setTimeout(r, 5000))
