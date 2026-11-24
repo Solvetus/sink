@@ -44,7 +44,13 @@
     // the dataset below is the ANALYTICS binding's dataset; the account id lets the
     // dashboard read it with the NUXT_CF_API_TOKEN secret (Account Analytics: Read).
     "NUXT_DATASET": "sink_go_solvetus_clicks",
-    "NUXT_CF_ACCOUNT_ID": "668113a7c146c356b40a76cbe3343bfe"
+    "NUXT_CF_ACCOUNT_ID": "668113a7c146c356b40a76cbe3343bfe",
+    // Cloudflare Access protects /dashboard and /_docs only (never a short link). With both values
+    // set, /api also accepts the Access login; the site token keeps working. AUD is added when the
+    // Access application exists.
+    "NUXT_CF_ACCESS_TEAM_DOMAIN": "https://solvetus.cloudflareaccess.com",
+    // Application Audience (AUD) tag of the Access application sink-go-solvetus-dashboard. Not a secret.
+    "NUXT_CF_ACCESS_AUD": "c2094b1530465a64dfdbd1c436095f7000b775be0f8f638735dfe47da8d32c1a"
   },
   "analytics_engine_datasets": [
     { "binding": "ANALYTICS", "dataset": "sink_go_solvetus_clicks" }
