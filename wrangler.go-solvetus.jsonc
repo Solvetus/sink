@@ -17,7 +17,10 @@
   },
   "compatibility_date": "2026-11-23",
   "compatibility_flags": ["nodejs_compat"],
-  // Turned off once go.solvetus.com is live (cut-over step 6).
+  // The custom domain. Wrangler creates the (proxied) DNS record and the certificate. The hostname must
+  // be free first: the old Switchy CNAME was deleted before this was deployed (cut-over, 2026-11-24).
+  "routes": [{ "pattern": "go.solvetus.com", "custom_domain": true }],
+  // Turned off once go.solvetus.com is live and verified (cut-over step 6).
   "workers_dev": true,
   "preview_urls": false,
   // vars in this file are the single source of truth: a deploy replaces whatever
