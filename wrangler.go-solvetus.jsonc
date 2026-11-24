@@ -50,7 +50,7 @@
     { "binding": "ANALYTICS", "dataset": "sink_go_solvetus_clicks" }
   ],
   "kv_namespaces": [
-    { "binding": "KV", "id": "REPLACE_WITH_KV_NAMESPACE_ID" }
+    { "binding": "KV", "id": "add6aa9708974b62a6541fdc9bc91dea" }
   ],
   "d1_databases": [
     {
