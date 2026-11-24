@@ -24,7 +24,7 @@ Add one line to `instances/<instance>/links.json` (slug lowercase-hyphen, vendor
 
 ## New instance (for example go.aeiodoo.com)
 Copy `wrangler.go-solvetus.jsonc` and `instances/go-solvetus/`, rename every resource `sink-<subdomain>-<domain>-…`,
-add a GitHub Environment of the same name (`CLOUDFLARE_API_TOKEN`, `SINK_SITE_TOKEN` secrets; `CLOUDFLARE_ACCOUNT_ID` variable),
+add a GitHub Environment of the same name (`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_D1_API_TOKEN`, `SINK_SITE_TOKEN` secrets; `CLOUDFLARE_ACCOUNT_ID` variable). The deploy token never carries D1; `CLOUDFLARE_D1_API_TOKEN` is mapped into the migrate step only,
 and add the instance to both workflow matrices.
 
 Full standard, decisions and token register: the Solvetus vault, `Affiliate Links Standard`.

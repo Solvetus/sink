@@ -6,6 +6,9 @@
   // Naming: sink-<subdomain>-<domain>-<resource> (Infrastructure Naming Standards).
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "sink-go-solvetus",
+  // Pinned (as in subsigno-COM-app): wrangler refuses a token from any other account,
+  // so a resource can never again be created in the wrong one (D1 and KV Standard, section 1).
+  "account_id": "668113a7c146c356b40a76cbe3343bfe",
   "main": ".output/server/index.mjs",
   "assets": {
     "binding": "ASSETS",
