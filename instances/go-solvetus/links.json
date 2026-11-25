@@ -20,15 +20,15 @@
     },
     {
       "slug": "odoo-crm",
-      "url": "https://www.odoo.com/app/crm?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/TWcC"
     },
     {
       "slug": "odoo-sales",
-      "url": "https://www.odoo.com/app/sales?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/GBvW"
     },
     {
       "slug": "odoo-ecommerce",
-      "url": "https://www.odoo.com/app/ecommerce?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/s17"
     },
     {
       "slug": "odoo-website",
@@ -36,43 +36,43 @@
     },
     {
       "slug": "odoo-point-of-sale",
-      "url": "https://www.odoo.com/app/point-of-sale-shop?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/IW5E"
     },
     {
       "slug": "odoo-subscriptions",
-      "url": "https://www.odoo.com/app/subscriptions?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/OfNR"
     },
     {
       "slug": "odoo-rental",
-      "url": "https://www.odoo.com/app/rental?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/hfe"
     },
     {
       "slug": "odoo-email-marketing",
-      "url": "https://www.odoo.com/app/email-marketing?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/LvN"
     },
     {
       "slug": "odoo-marketing-automation",
-      "url": "https://www.odoo.com/app/marketing-automation?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/LeZ"
     },
     {
       "slug": "odoo-accounting",
-      "url": "https://www.odoo.com/app/accounting?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/iDsj"
     },
     {
       "slug": "odoo-invoicing",
-      "url": "https://www.odoo.com/app/invoicing?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/VGy"
     },
     {
       "slug": "odoo-expenses",
-      "url": "https://www.odoo.com/app/expenses?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/wBps"
     },
     {
       "slug": "odoo-inventory",
-      "url": "https://www.odoo.com/app/inventory?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/5cF"
     },
     {
       "slug": "odoo-purchase",
-      "url": "https://www.odoo.com/app/purchase?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/Oq1H"
     },
     {
       "slug": "odoo-manufacturing",
@@ -88,27 +88,27 @@
     },
     {
       "slug": "odoo-project",
-      "url": "https://www.odoo.com/app/project?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/JJl"
     },
     {
       "slug": "odoo-timesheets",
-      "url": "https://www.odoo.com/app/timesheet?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/WxYR"
     },
     {
       "slug": "odoo-helpdesk",
-      "url": "https://www.odoo.com/app/helpdesk?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/1wwn"
     },
     {
       "slug": "odoo-planning",
-      "url": "https://www.odoo.com/app/planning?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/b0Pq"
     },
     {
       "slug": "odoo-employees",
-      "url": "https://www.odoo.com/app/employees?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/TGF"
     },
     {
       "slug": "odoo-recruitment",
-      "url": "https://www.odoo.com/app/recruitment?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/XxK2"
     },
     {
       "slug": "odoo-payroll",
@@ -116,15 +116,15 @@
     },
     {
       "slug": "odoo-studio",
-      "url": "https://www.odoo.com/app/studio?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/DJ0"
     },
     {
       "slug": "odoo-documents",
-      "url": "https://www.odoo.com/app/documents?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/Cuh4"
     },
     {
       "slug": "odoo-sign",
-      "url": "https://www.odoo.com/app/sign?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+      "url": "https://www.odoo.com/r/TNNc"
     },
     {
       "slug": "odoo-pricing",
@@ -137,6 +137,106 @@
     {
       "slug": "odoo-trial",
       "url": "https://www.odoo.com/trial?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-trial"
+    },
+    {
+      "slug": "odoo",
+      "url": "https://www.odoo.com/r/qCK0"
+    },
+    {
+      "slug": "odoo-elearning",
+      "url": "https://www.odoo.com/r/IEA"
+    },
+    {
+      "slug": "odoo-whatsapp",
+      "url": "https://www.odoo.com/r/bkUj"
+    },
+    {
+      "slug": "odoo-appointments",
+      "url": "https://www.odoo.com/r/zi3"
+    },
+    {
+      "slug": "odoo-discuss",
+      "url": "https://www.odoo.com/r/ALf"
+    },
+    {
+      "slug": "odoo-localization",
+      "url": "https://www.odoo.com/r/zuqK"
+    },
+    {
+      "slug": "odoo-events",
+      "url": "https://www.odoo.com/r/0HKJ"
+    },
+    {
+      "slug": "odoo-blog",
+      "url": "https://www.odoo.com/r/P5Ix"
+    },
+    {
+      "slug": "odoo-sms-marketing",
+      "url": "https://www.odoo.com/r/4oW"
+    },
+    {
+      "slug": "odoo-social-marketing",
+      "url": "https://www.odoo.com/r/AqQz"
+    },
+    {
+      "slug": "odoo-voip",
+      "url": "https://www.odoo.com/r/DJGj"
+    },
+    {
+      "slug": "odoo-pos-restaurant",
+      "url": "https://www.odoo.com/r/YT1e"
+    },
+    {
+      "slug": "odoo-referral",
+      "url": "https://www.odoo.com/r/rtc7"
+    },
+    {
+      "slug": "odoo-ai",
+      "url": "https://www.odoo.com/r/EelW"
+    },
+    {
+      "slug": "odoo-time-off",
+      "url": "https://www.odoo.com/r/blE"
+    },
+    {
+      "slug": "odoo-field-service",
+      "url": "https://www.odoo.com/r/nn27"
+    },
+    {
+      "slug": "odoo-iot",
+      "url": "https://www.odoo.com/r/7sr"
+    },
+    {
+      "slug": "odoo-knowledge",
+      "url": "https://www.odoo.com/r/E9DR"
+    },
+    {
+      "slug": "odoo-spreadsheet",
+      "url": "https://www.odoo.com/r/puk"
+    },
+    {
+      "slug": "odoo-surveys",
+      "url": "https://www.odoo.com/r/e8Nd"
+    },
+    {
+      "slug": "odoo-live-chat",
+      "url": "https://www.odoo.com/r/42qE"
+    },
+    {
+      "slug": "odoo-approvals",
+      "url": "https://www.odoo.com/r/3Z8r"
+    },
+    {
+      "slug": "odoo-fleet",
+      "url": "https://www.odoo.com/r/m0tN"
+    },
+    {
+      "slug": "odoo-appraisals",
+      "url": "https://www.odoo.com/r/3oSN"
+    },
+    {
+      "slug": "odoo-forum",
+      "url": "https://www.odoo.com/r/YH1b"
     },
     {
       "slug": "link-check",

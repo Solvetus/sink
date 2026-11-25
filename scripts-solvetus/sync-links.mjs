@@ -10,9 +10,8 @@
 // Prints slug, action and HTTP status only. The token is read from the environment, sent as a Bearer header, and
 // never printed. Never deletes a link.
 import { readFileSync } from 'node:fs'
+import { linkProblems } from './link-rules.mjs'
 
-const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
-const ALLOWED = new Set(['slug', 'url'])
 const UA = 'solvetus-link-check/1.0 (+https://solvetus.com)'
 const instance = process.argv[2]
 const verifyOnly = process.argv.includes('--verify-only')
@@ -23,20 +22,13 @@ const base = cfg.base.replace(/\/$/, '')
 const token = process.env.SINK_SITE_TOKEN
 if (!verifyOnly && !token) { console.error('SINK_SITE_TOKEN is not set'); process.exit(2) }
 
-// 1. Validate the file: conventions, only plain redirects, and a well-formed canary.
+// 1. Validate the file: conventions (scripts-solvetus/link-rules.mjs), only plain redirects, and a well-formed canary.
 const problems = []
 const seen = new Set()
 for (const l of cfg.links) {
-  for (const k of Object.keys(l)) if (!ALLOWED.has(k)) problems.push(`${l.slug}: field "${k}" is not allowed`)
-  if (!SLUG.test(l.slug)) problems.push(`${l.slug}: slug must be lowercase-hyphen`)
+  problems.push(...linkProblems(l, cfg.utm_source))
   if (seen.has(l.slug)) problems.push(`${l.slug}: duplicate slug`)
   seen.add(l.slug)
-  let u
-  try { u = new URL(l.url) } catch { problems.push(`${l.slug}: url is not a URL`); continue }
-  if (u.protocol !== 'https:') problems.push(`${l.slug}: url must be https`)
-  if (u.searchParams.get('utm_source') !== cfg.utm_source) problems.push(`${l.slug}: utm_source must be ${cfg.utm_source}`)
-  if (u.searchParams.get('utm_medium') !== 'referral') problems.push(`${l.slug}: utm_medium must be referral`)
-  if (!u.searchParams.get('utm_campaign')) problems.push(`${l.slug}: utm_campaign is required`)
 }
 const canary = cfg.links.find(l => l.slug === cfg.canary)
 if (!canary) problems.push(`canary "${cfg.canary}" is not one of the links`)
