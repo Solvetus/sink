@@ -19,6 +19,126 @@
       "url": "https://proton.me/business/pass/pricing?utm_source=solvetuscom&utm_medium=referral&utm_campaign=password-managers"
     },
     {
+      "slug": "odoo-crm",
+      "url": "https://www.odoo.com/app/crm?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-sales",
+      "url": "https://www.odoo.com/app/sales?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-ecommerce",
+      "url": "https://www.odoo.com/app/ecommerce?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-website",
+      "url": "https://www.odoo.com/app/website?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-point-of-sale",
+      "url": "https://www.odoo.com/app/point-of-sale-shop?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-subscriptions",
+      "url": "https://www.odoo.com/app/subscriptions?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-rental",
+      "url": "https://www.odoo.com/app/rental?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-email-marketing",
+      "url": "https://www.odoo.com/app/email-marketing?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-marketing-automation",
+      "url": "https://www.odoo.com/app/marketing-automation?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-accounting",
+      "url": "https://www.odoo.com/app/accounting?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-invoicing",
+      "url": "https://www.odoo.com/app/invoicing?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-expenses",
+      "url": "https://www.odoo.com/app/expenses?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-inventory",
+      "url": "https://www.odoo.com/app/inventory?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-purchase",
+      "url": "https://www.odoo.com/app/purchase?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-manufacturing",
+      "url": "https://www.odoo.com/app/manufacturing?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-maintenance",
+      "url": "https://www.odoo.com/app/maintenance?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-quality",
+      "url": "https://www.odoo.com/app/quality?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-project",
+      "url": "https://www.odoo.com/app/project?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-timesheets",
+      "url": "https://www.odoo.com/app/timesheet?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-helpdesk",
+      "url": "https://www.odoo.com/app/helpdesk?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-planning",
+      "url": "https://www.odoo.com/app/planning?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-employees",
+      "url": "https://www.odoo.com/app/employees?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-recruitment",
+      "url": "https://www.odoo.com/app/recruitment?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-payroll",
+      "url": "https://www.odoo.com/app/payroll?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-studio",
+      "url": "https://www.odoo.com/app/studio?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-documents",
+      "url": "https://www.odoo.com/app/documents?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-sign",
+      "url": "https://www.odoo.com/app/sign?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-apps"
+    },
+    {
+      "slug": "odoo-pricing",
+      "url": "https://www.odoo.com/pricing?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-pricing"
+    },
+    {
+      "slug": "odoo-editions",
+      "url": "https://www.odoo.com/page/editions?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-pricing"
+    },
+    {
+      "slug": "odoo-trial",
+      "url": "https://www.odoo.com/trial?utm_source=solvetuscom&utm_medium=referral&utm_campaign=odoo-trial"
+    },
+    {
       "slug": "link-check",
       "url": "https://solvetus.com/?utm_source=solvetuscom&utm_medium=referral&utm_campaign=link-check"
     }
