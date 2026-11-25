@@ -20,9 +20,11 @@ run is this repository.
 
 ## Add a link
 Add one line to `instances/<instance>/links.json` (slug lowercase-hyphen, vendor first), push to `master`. Deploy, then the link
-sync, run by themselves. The destination is one of two kinds (`scripts-solvetus/link-rules.mjs`, self-test `node scripts-solvetus/link-rules.mjs --self-test`):
+sync, run by themselves. The destination is one of three kinds (`scripts-solvetus/link-rules.mjs`, self-test `node scripts-solvetus/link-rules.mjs --self-test`):
 - **an Odoo affiliate redirect, exactly `https://www.odoo.com/r/<code>` with no query string.** Odoo's own redirect adds its
   tracking and pays the commission, so our UTMs are not added (a query string there could overwrite it and is refused);
+- **a Nord Security affiliate link, exactly `https://go.nordpass.io/aff_c?…` or `https://go.nordvpn.net/aff_c?…`** with `offer_id` and
+  `aff_id`, **verbatim: no `utm_*` parameter, no fragment** (affiliate links are never modified; Nord's platform is affiliates.nordvpn.com);
 - **anything else:** https with `utm_source`, `utm_medium=referral` and `utm_campaign`.
 
 ## Automation never clicks a vendor link
