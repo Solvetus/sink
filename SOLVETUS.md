@@ -12,14 +12,18 @@ run is this repository.
 | `wrangler.<instance>.jsonc` | Worker, bindings and every setting for one instance (`go-solvetus` = go.solvetus.com) |
 | `instances/<instance>/links.json` | The links of that instance, as code |
 | `scripts-solvetus/sync-links.mjs` | Creates or edits links through Sink's API, then checks each answers 302 |
+| `scripts-solvetus/link-rules.mjs` | The rules every `links.json` entry must meet, offline, with a self-test the `Links` workflow runs first |
 | `.github/workflows/deploy.yml` | The only deployer (Workers Builds stays off) |
 | `.github/workflows/links.yml` | Runs the sync after every successful deploy |
 | `.github/workflows/kv-check.yml` + `scripts-solvetus/check-kv.mjs` | Manual: proves the Worker reads and writes the EU-jurisdiction KV through its binding |
 | `.github/workflows/release.yml` | GitHub Release from the annotated tag message |
 
 ## Add a link
-Add one line to `instances/<instance>/links.json` (slug lowercase-hyphen, vendor first; URL with
-`utm_source`, `utm_medium=referral`, `utm_campaign`), push to `master`. Deploy, then the link sync, run by themselves.
+Add one line to `instances/<instance>/links.json` (slug lowercase-hyphen, vendor first), push to `master`. Deploy, then the link
+sync, run by themselves. The destination is one of two kinds (`scripts-solvetus/link-rules.mjs`, self-test `node scripts-solvetus/link-rules.mjs --self-test`):
+- **an Odoo affiliate redirect, exactly `https://www.odoo.com/r/<code>` with no query string.** Odoo's own redirect adds its
+  tracking and pays the commission, so our UTMs are not added (a query string there could overwrite it and is refused);
+- **anything else:** https with `utm_source`, `utm_medium=referral` and `utm_campaign`.
 
 ## Automation never clicks a vendor link
 Sink records every request to a short link as a visitor (IP, user agent, location, ...). Its bot detection only recognises real
