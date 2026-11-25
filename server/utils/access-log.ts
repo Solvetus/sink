@@ -13,6 +13,7 @@ import {
 } from 'ua-parser-js/extensions'
 import { parseURL } from 'ufo'
 import { getFlag } from '#shared/utils/flag'
+import { minimiseAccessLog } from './solvetus-click-record'
 
 function toBlobNumber(blob: string) {
   return +blob.replace(/\D/g, '')
@@ -172,7 +173,7 @@ export function collectAccessLog(event: H3Event): AccessLogResult | undefined {
     longitude: Number(cf?.longitude || getHeader(event, 'cf-iplongitude') || 0),
   }
 
-  return {
+  return minimiseAccessLog({
     logs,
     click: {
       country: cf?.country || '',
@@ -183,7 +184,7 @@ export function collectAccessLog(event: H3Event): AccessLogResult | undefined {
       os: uaInfo?.os?.name || '',
       referer: referer || '',
     },
-  }
+  })
 }
 
 export function writeAccessLog(event: H3Event, accessLogs: LogsMap): void {

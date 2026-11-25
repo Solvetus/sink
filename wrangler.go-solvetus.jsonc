@@ -80,8 +80,8 @@
   // Upstream's daily cron (backup + expired-link cleanup). Both are off here, so it no-ops.
   "triggers": { "crons": ["0 0 * * *"] },
   // Console logs only. Invocation logs are OFF: each records the full request,
-  // including headers and the cf geo object, of every click, on top of what the
-  // analytics dataset already holds (which the privacy policy discloses).
+  // including headers and the cf geo object, of every click, which would defeat the
+  // click-record minimisation (SOLVETUS.md): the dataset holds no IP, coordinates or User-Agent.
   "observability": {
     "enabled": true,
     "logs": { "enabled": true, "invocation_logs": false },

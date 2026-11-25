@@ -46,6 +46,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+      # Privacy gate: fails the deploy if a click record could carry an IP, coordinates or a raw User-Agent
+      # (the one code divergence from upstream, see SOLVETUS.md).
+      - run: pnpm vitest --run tests/unit/solvetus-click-record.spec.ts
       # The deploy token never carries D1 (D1 and KV Standard, section 5). Migrations use their own
       # D1-only token, github-actions-sink-d1, mapped into THIS step only (it overrides the job-level
       # CLOUDFLARE_API_TOKEN here and nowhere else).
