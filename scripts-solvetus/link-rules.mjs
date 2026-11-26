@@ -10,7 +10,9 @@
 //   2. a Nord Security affiliate link, exactly https://go.nordpass.io/aff_c?... or https://go.nordvpn.net/aff_c?... with the
 //      offer_id and aff_id parameters, used VERBATIM: no utm_* parameter and no fragment (decision 2026-11-25: affiliate
 //      links are never modified; Nord's own platform, affiliates.nordvpn.com, does the tracking).
-//   3. anything else: https, with utm_source=<the file's utm_source>, utm_medium=referral and a utm_campaign.
+//   3. a Namecheap affiliate link (FastVPN, impact.com), exactly https://namecheap.pxf.io/c/<digits>/<digits>/<digits> with NO
+//      query string and no fragment, used VERBATIM (decision 2026-11-26: same rule as Nord; impact.com does the tracking).
+//   4. anything else: https, with utm_source=<the file's utm_source>, utm_medium=referral and a utm_campaign.
 // Slug rules and the "plain redirect only" field rule apply to both.
 import { pathToFileURL } from 'node:url'
 
@@ -28,6 +30,12 @@ export const isNordAffiliateLink = (u) =>
   u.protocol === 'https:' && NORD_HOSTS.has(u.hostname) && u.pathname === '/aff_c' && !u.hash &&
   u.searchParams.has('offer_id') && u.searchParams.has('aff_id') && ![...u.searchParams.keys()].some((k) => k.startsWith('utm_'))
 
+const NAMECHEAP_HOST = 'namecheap.pxf.io'
+const NAMECHEAP_PATH = /^\/c\/\d+\/\d+\/\d+$/
+/** @param {URL} u */
+export const isNamecheapAffiliateLink = (u) =>
+  u.protocol === 'https:' && u.hostname === NAMECHEAP_HOST && NAMECHEAP_PATH.test(u.pathname) && !u.search && !u.hash
+
 /** @param {{slug:string,url:string}} l @param {string} utmSource */
 export function linkProblems(l, utmSource) {
   const out = []
@@ -40,6 +48,8 @@ export function linkProblems(l, utmSource) {
     if (u.search || u.hash) out.push(`${l.slug}: an odoo.com/r/<code> destination must be plain, with no query string or fragment (Odoo's own tracking pays the commission)`)
   } else if (NORD_HOSTS.has(u.hostname)) {
     if (!isNordAffiliateLink(u)) out.push(`${l.slug}: a Nord destination must be https://<go.nordpass.io|go.nordvpn.net>/aff_c with offer_id and aff_id, verbatim: no utm_* parameter, no fragment`)
+  } else if (u.hostname === NAMECHEAP_HOST) {
+    if (!isNamecheapAffiliateLink(u)) out.push(`${l.slug}: a Namecheap destination must be https://namecheap.pxf.io/c/<id>/<id>/<id>, verbatim: no query string, no fragment`)
   } else {
     if (u.searchParams.get('utm_source') !== utmSource) out.push(`${l.slug}: utm_source must be ${utmSource}`)
     if (u.searchParams.get('utm_medium') !== 'referral') out.push(`${l.slug}: utm_medium must be referral`)
@@ -75,6 +85,14 @@ export function selfTest() {
     ['an http Nord affiliate link is refused', { slug: 'nordpass', url: 'https://go.nordpass.io/aff_c?offer_id=488&aff_id=161943&url_id=9356'.replace('https','http') }, 1],
     ['a Nord host with another path is refused', { slug: 'nordpass', url: 'https://go.nordpass.io/other?offer_id=488&aff_id=161943' }, 1],
     ['a Nord affiliate link without aff_id is refused', { slug: 'nordpass', url: 'https://go.nordpass.io/aff_c?offer_id=488&url_id=9356' }, 1],
+    ['the real FastVPN (Namecheap) affiliate link passes, verbatim', { slug: 'fastvpn', url: 'https://namecheap.pxf.io/c/3284549/1159281/5618' }, 0],
+    ['a Namecheap link with our UTMs appended is refused', { slug: 'fastvpn', url: 'https://namecheap.pxf.io/c/3284549/1159281/5618?utm_source=solvetuscom&utm_medium=referral&utm_campaign=x' }, 1],
+    ['a Namecheap link with any query string is refused', { slug: 'fastvpn', url: 'https://namecheap.pxf.io/c/3284549/1159281/5618?subId1=x' }, 1],
+    ['a Namecheap link with a fragment is refused', { slug: 'fastvpn', url: 'https://namecheap.pxf.io/c/3284549/1159281/5618#a' }, 1],
+    ['a Namecheap link on another path is refused', { slug: 'fastvpn', url: 'https://namecheap.pxf.io/x/3284549/1159281/5618' }, 1],
+    ['a Namecheap link with a non-numeric id is refused', { slug: 'fastvpn', url: 'https://namecheap.pxf.io/c/abc/1159281/5618' }, 1],
+    ['a Namecheap path on a look-alike host still needs the UTMs', { slug: 'fastvpn', url: 'https://namecheap.pxf.io.evil.example/c/3284549/1159281/5618' }, 1],
+    ['an http Namecheap link is refused', { slug: 'fastvpn', url: 'http://namecheap.pxf.io/c/3284549/1159281/5618' }, 1],
     ['a non-URL is caught', { slug: 'nordpass', url: 'not a url' }, 1],
     ['an upper-case slug is caught', { slug: 'Odoo-CRM', url: 'https://www.odoo.com/r/TWcC' }, 1],
     ['an extra field (password, geo, ...) is caught', { slug: 'odoo-crm', url: 'https://www.odoo.com/r/TWcC', password: 'x' }, 1],

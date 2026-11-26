@@ -26,6 +26,8 @@ sync, run by themselves. The destination is one of three kinds (`scripts-solvetu
   tracking and pays the commission, so our UTMs are not added (a query string there could overwrite it and is refused);
 - **a Nord Security affiliate link, exactly `https://go.nordpass.io/aff_c?…` or `https://go.nordvpn.net/aff_c?…`** with `offer_id` and
   `aff_id`, **verbatim: no `utm_*` parameter, no fragment** (affiliate links are never modified; Nord's platform is affiliates.nordvpn.com);
+- **a Namecheap affiliate link (FastVPN, impact.com), exactly `https://namecheap.pxf.io/c/<id>/<id>/<id>`** (numeric ids), **verbatim:
+  no query string, no fragment** (2026-11-26);
 - **anything else:** https with `utm_source`, `utm_medium=referral` and `utm_campaign`.
 
 ## Automation never clicks a vendor link
