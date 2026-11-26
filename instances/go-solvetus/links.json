@@ -23,6 +23,14 @@
       "url": "https://mullvad.net/en/pricing?utm_source=solvetuscom&utm_medium=referral&utm_campaign=vpn"
     },
     {
+      "slug": "fastvpn-site",
+      "url": "https://www.fastvpn.com/?utm_source=solvetuscom&utm_medium=referral&utm_campaign=vpn"
+    },
+    {
+      "slug": "spaceship-vpn",
+      "url": "https://www.spaceship.com/vpn/?utm_source=solvetuscom&utm_medium=referral&utm_campaign=vpn"
+    },
+    {
       "slug": "nordvpn-revolut",
       "url": "https://support.nordvpn.com/hc/en-us/articles/30639649532049?utm_source=solvetuscom&utm_medium=referral&utm_campaign=vpn"
     },

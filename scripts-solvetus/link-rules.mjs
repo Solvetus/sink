@@ -95,6 +95,8 @@ export function selfTest() {
     ['an http Namecheap link is refused', { slug: 'fastvpn', url: 'http://namecheap.pxf.io/c/3284549/1159281/5618' }, 1],
     ['a Nord support page (not an affiliate host) with our three UTMs passes', { slug: 'nordvpn-revolut', url: `https://support.nordvpn.com/hc/en-us/articles/30639649532049${utm}` }, 0],
     ['a Nord support page without our UTMs is caught', { slug: 'nordvpn-revolut', url: 'https://support.nordvpn.com/hc/en-us/articles/30639649532049' }, 1],
+    ['a vendor home page that is not an affiliate host (fastvpn.com) passes with our three UTMs', { slug: 'fastvpn-site', url: `https://www.fastvpn.com/${utm}` }, 0],
+    ['a vendor home page without our UTMs is caught', { slug: 'spaceship-vpn', url: 'https://www.spaceship.com/vpn/' }, 1],
     ['a non-URL is caught', { slug: 'nordpass', url: 'not a url' }, 1],
     ['an upper-case slug is caught', { slug: 'Odoo-CRM', url: 'https://www.odoo.com/r/TWcC' }, 1],
     ['an extra field (password, geo, ...) is caught', { slug: 'odoo-crm', url: 'https://www.odoo.com/r/TWcC', password: 'x' }, 1],
