@@ -16,7 +16,19 @@
     },
     {
       "slug": "proton-vpn",
-      "url": "https://protonvpn.com/pricing?utm_source=solvetuscom&utm_medium=referral&utm_campaign=vpn"
+      "url": "https://go.getproton.me/aff_c?offer_id=26&aff_id=22411"
+    },
+    {
+      "slug": "proton-mail",
+      "url": "https://go.getproton.me/aff_c?offer_id=7&aff_id=22411"
+    },
+    {
+      "slug": "proton-drive",
+      "url": "https://go.getproton.me/aff_c?offer_id=43&aff_id=22411"
+    },
+    {
+      "slug": "proton-lumo",
+      "url": "https://go.getproton.me/aff_c?offer_id=68&aff_id=22411"
     },
     {
       "slug": "mullvad",
@@ -52,7 +64,7 @@
     },
     {
       "slug": "proton-pass",
-      "url": "https://proton.me/business/pass/pricing?utm_source=solvetuscom&utm_medium=referral&utm_campaign=password-managers"
+      "url": "https://go.getproton.me/aff_c?offer_id=50&aff_id=22411&url_id=1166"
     },
     {
       "slug": "odoo-crm",

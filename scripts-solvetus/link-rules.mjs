@@ -12,7 +12,9 @@
 //      links are never modified; Nord's own platform, affiliates.nordvpn.com, does the tracking).
 //   3. a Namecheap affiliate link (FastVPN, impact.com), exactly https://namecheap.pxf.io/c/<digits>/<digits>/<digits> with NO
 //      query string and no fragment, used VERBATIM (decision 2026-11-26: same rule as Nord; impact.com does the tracking).
-//   4. anything else: https, with utm_source=<the file's utm_source>, utm_medium=referral and a utm_campaign.
+//   4. a Proton affiliate link, exactly https://go.getproton.me/aff_c?offer_id=<digits>&aff_id=22411[&url_id=<digits>] and nothing
+//      else (no other parameter, no utm_*, no fragment), used VERBATIM (decision 2026-11-27: same rule as Nord and Namecheap).
+//   5. anything else: https, with utm_source=<the file's utm_source>, utm_medium=referral and a utm_campaign.
 // Slug rules and the "plain redirect only" field rule apply to both.
 import { pathToFileURL } from 'node:url'
 
@@ -36,6 +38,18 @@ const NAMECHEAP_PATH = /^\/c\/\d+\/\d+\/\d+$/
 export const isNamecheapAffiliateLink = (u) =>
   u.protocol === 'https:' && u.hostname === NAMECHEAP_HOST && NAMECHEAP_PATH.test(u.pathname) && !u.search && !u.hash
 
+const PROTON_HOST = 'go.getproton.me'
+const PROTON_AFF_ID = '22411'
+/** @param {URL} u */
+export const isProtonAffiliateLink = (u) => {
+  if (u.protocol !== 'https:' || u.hostname !== PROTON_HOST || u.pathname !== '/aff_c' || u.hash) return false
+  const keys = [...u.searchParams.keys()]
+  if (new Set(keys).size !== keys.length || keys.some((k) => !['offer_id', 'aff_id', 'url_id'].includes(k))) return false
+  const offer = u.searchParams.get('offer_id')
+  const url = u.searchParams.get('url_id')
+  return /^\d+$/.test(offer ?? '') && u.searchParams.get('aff_id') === PROTON_AFF_ID && (url === null || /^\d+$/.test(url))
+}
+
 /** @param {{slug:string,url:string}} l @param {string} utmSource */
 export function linkProblems(l, utmSource) {
   const out = []
@@ -50,6 +64,8 @@ export function linkProblems(l, utmSource) {
     if (!isNordAffiliateLink(u)) out.push(`${l.slug}: a Nord destination must be https://<go.nordpass.io|go.nordvpn.net>/aff_c with offer_id and aff_id, verbatim: no utm_* parameter, no fragment`)
   } else if (u.hostname === NAMECHEAP_HOST) {
     if (!isNamecheapAffiliateLink(u)) out.push(`${l.slug}: a Namecheap destination must be https://namecheap.pxf.io/c/<id>/<id>/<id>, verbatim: no query string, no fragment`)
+  } else if (u.hostname === PROTON_HOST) {
+    if (!isProtonAffiliateLink(u)) out.push(`${l.slug}: a Proton destination must be https://go.getproton.me/aff_c with offer_id and aff_id=${PROTON_AFF_ID} (url_id optional), verbatim: no other parameter, no utm_*, no fragment`)
   } else {
     if (u.searchParams.get('utm_source') !== utmSource) out.push(`${l.slug}: utm_source must be ${utmSource}`)
     if (u.searchParams.get('utm_medium') !== 'referral') out.push(`${l.slug}: utm_medium must be referral`)
@@ -93,6 +109,21 @@ export function selfTest() {
     ['a Namecheap link with a non-numeric id is refused', { slug: 'fastvpn', url: 'https://namecheap.pxf.io/c/abc/1159281/5618' }, 1],
     ['a Namecheap path on a look-alike host still needs the UTMs', { slug: 'fastvpn', url: 'https://namecheap.pxf.io.evil.example/c/3284549/1159281/5618' }, 1],
     ['an http Namecheap link is refused', { slug: 'fastvpn', url: 'http://namecheap.pxf.io/c/3284549/1159281/5618' }, 1],
+    ['the real Proton VPN affiliate link (no url_id) passes, verbatim', { slug: 'proton-vpn', url: 'https://go.getproton.me/aff_c?offer_id=26&aff_id=22411' }, 0],
+    ['the real Proton Pass affiliate link (with url_id) passes, verbatim', { slug: 'proton-pass', url: 'https://go.getproton.me/aff_c?offer_id=50&aff_id=22411&url_id=1166' }, 0],
+    ['the Proton Mail, Drive and Lumo affiliate links pass, verbatim', { slug: 'proton-mail', url: 'https://go.getproton.me/aff_c?offer_id=7&aff_id=22411' }, 0],
+    ['a Proton link with our UTMs appended is refused', { slug: 'proton-vpn', url: 'https://go.getproton.me/aff_c?offer_id=26&aff_id=22411&utm_source=solvetuscom&utm_medium=referral&utm_campaign=vpn' }, 1],
+    ['a Proton link with a wrong aff_id is refused', { slug: 'proton-vpn', url: 'https://go.getproton.me/aff_c?offer_id=26&aff_id=99999' }, 1],
+    ['a Proton link without aff_id is refused', { slug: 'proton-vpn', url: 'https://go.getproton.me/aff_c?offer_id=26' }, 1],
+    ['a Proton link with an extra parameter is refused', { slug: 'proton-vpn', url: 'https://go.getproton.me/aff_c?offer_id=26&aff_id=22411&aff_sub=x' }, 1],
+    ['a Proton link with a repeated parameter is refused', { slug: 'proton-vpn', url: 'https://go.getproton.me/aff_c?offer_id=26&offer_id=27&aff_id=22411' }, 1],
+    ['a Proton link with a non-numeric offer_id is refused', { slug: 'proton-vpn', url: 'https://go.getproton.me/aff_c?offer_id=abc&aff_id=22411' }, 1],
+    ['a Proton link with a non-numeric url_id is refused', { slug: 'proton-pass', url: 'https://go.getproton.me/aff_c?offer_id=50&aff_id=22411&url_id=x' }, 1],
+    ['a Proton link with a fragment is refused', { slug: 'proton-vpn', url: 'https://go.getproton.me/aff_c?offer_id=26&aff_id=22411#a' }, 1],
+    ['a Proton link on another path is refused', { slug: 'proton-vpn', url: 'https://go.getproton.me/other?offer_id=26&aff_id=22411' }, 1],
+    ['a Proton link on another host (look-alike) is refused', { slug: 'proton-vpn', url: 'https://go.getproton.me.evil.example/aff_c?offer_id=26&aff_id=22411' }, 1],
+    ['a Proton link on another Proton host still needs the UTMs', { slug: 'proton-vpn', url: 'https://protonvpn.com/aff_c?offer_id=26&aff_id=22411' }, 1],
+    ['an http Proton link is refused', { slug: 'proton-vpn', url: 'http://go.getproton.me/aff_c?offer_id=26&aff_id=22411' }, 1],
     ['a Nord support page (not an affiliate host) with our three UTMs passes', { slug: 'nordvpn-revolut', url: `https://support.nordvpn.com/hc/en-us/articles/30639649532049${utm}` }, 0],
     ['a Nord support page without our UTMs is caught', { slug: 'nordvpn-revolut', url: 'https://support.nordvpn.com/hc/en-us/articles/30639649532049' }, 1],
     ['a vendor home page that is not an affiliate host (fastvpn.com) passes with our three UTMs', { slug: 'fastvpn-site', url: `https://www.fastvpn.com/${utm}` }, 0],
